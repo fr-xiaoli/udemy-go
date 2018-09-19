@@ -148,7 +148,12 @@ func apply(conn net.Conn) {
 			<a href="/">index</a><br/>
 			<a href="/about">about</a><br/>
 			<a href="/contact">contact</a><br/>
-			<a href="/apply">apply</a>
+			<a href="/apply">apply</a><br/><br/>
+			<div>
+				<form method="post" action="/apply">
+					<input type="submit" value="apply">
+				</form>
+			</div>
 		</body>
 	</html>`
 	fmt.Fprint(conn, "HTTP/1.1 200 OK\r\n")
@@ -159,5 +164,23 @@ func apply(conn net.Conn) {
 }
 
 func applyProcess(conn net.Conn) {
-
+	body := `<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>Contact</title>
+		</head>
+		<body>
+			<h1>Apply Process</h1>
+			<a href="/">index</a><br/>
+			<a href="/about">about</a><br/>
+			<a href="/contact">contact</a><br/>
+			<a href="/apply">apply</a>
+		</body>
+	</html>`
+	fmt.Fprint(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	fmt.Fprint(conn, "\r\n")
+	fmt.Fprint(conn, body)
 }
